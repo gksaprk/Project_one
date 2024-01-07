@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>javascript project</title>
+
+
+    <style>
+        body {
+            background-color: skyblue;
+        }
+
+        header {
+            background-color: yellow;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+
+        }
+
+        * {
+            margin: 0;
+        }
+
+        .labels {
+            height: 100px;
+            font-size: 25Px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .labels>input {
+            margin-left: 7px;
+            padding: 7px;
+        }
+
+        .labels>button {
+            margin-left: 7px;
+            padding: 7px;
+        }
+
+
+        .card {
+
+            height: 800px;
+
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: 30px auto 20px auto;
+            text-align: center;
+            font-family: arial;
+
+            border-radius: 5px;
+            border: 1px solid white;
+
+            padding: 20px;
+        }
+
+        .mypostingbox {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+    </style>
+
+    <script>
+        // // firebase
+        // // Firebase SDK 라이브러리 가져오기
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        // import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        // import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        // import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyDSKIkghyN5-KqScUkRhCH0sOFnkq--wZ8",
+        //     authDomain: "songyu-project.firebaseapp.com",
+        //     projectId: "songyu-project",
+        //     storageBucket: "songyu-project.appspot.com",
+        //     messagingSenderId: "510499059389",
+        //     appId: "1:510499059389:web:5efe8d56288a47702029d4",
+        //     measurementId: "G-0HQ6RY35XB"
+        // };
+
+        // // Initialize Firebase
+        // const app = initializeApp(firebaseConfig);
+        // // const analytics = getAnalytics(app);
+
+
+
+        function openwindow(id) {
+        
+        alert(`영화id : ${id}`)      // ``(백틱)이 먹힌다. 밑에 id 값 주고 적기!!
+        };
+
+
+
+        // openapi
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMWEyMWFhZmJlOGZkNDI1NmVhMTZjNTA3NjBlN2JhNiIsInN1YiI6IjY1OTc5MjY1ZWQ5NmJjMmU5MWY3YTNmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DE3mJi9RXTg2qf30PH63hQ9WBWNyXuV1rSTL7Shdf1Q'
+            }
+        };
+
+        let imageUrl = "https://image.tmdb.org/t/p/w300";
+
+
+
+        fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
+            .then(response => response.json())
+            .then(data => {
+
+
+                const myPostingBox = document.querySelector('.mypostingbox');
+                for (let i = 0; i < data.results.length; i++) {
+
+
+
+                    let temp_html = `
+            <div class="card" onclick=openwindow(${data.results[i].id});>
+                <img src="${imageUrl}${data.results[i].poster_path}" id="image" alt="" style="width:100%">
+                <h1>${data.results[i].title}</h1>
+                <p>${data.results[i].overview} </p>
+                <p>${data.results[i].vote_average}</p>
+            </div>
+                  `;
+                    myPostingBox.innerHTML += temp_html;
+                }
+
+                // let one = data.result[0].poster_path;
+                // document.getElementById('image').textContent = one;
+
+                // let two = data.results[0].original_title;
+                // document.getElementById('title').textContent = two;
+
+                // let three = data.results[0].overview;
+                // document.getElementById('comment').textContent = three;
+
+                // let four = data.results[0].vote_average;
+                // document.getElementById('score').textContent = four;
+
+
+            }
+
+            )
+            .catch(err => console.error(err));
+
+
+
+
+
+
+
+        // fetch('https://api.themoviedb.org/3/configuration', options)
+        //     .then(response => response.json())
+        //     .then(data1 => {
+        //         let posterPath = data1.images.base_url + data1.images.poster_sizes[0];   //경로
+        //         document.getElementById('image').src = posterPath;
+
+        //     })
+
+        // // url 구하기
+        // function getPosterUrl(images, size) {
+        //     let posterSize = images.poster_sizes[0];
+        //     return images.base.url +  images.backdrop_size[0] + '.jpg'
+        // }
+
+
+
+
+
+
+        // 검색
+        const keys = document.getElementById('key')
+        const but = document.getElementById('sb')
+
+        function searchfun() {
+            const searchKeyword = keys.value.toLowerCase();
+
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('h1').textContent.toLowerCase();
+
+                if (title.includes(searchKeyword)) {
+                    card.style.display = 'block'; // 검색어가 포함된 카드는 화면에 표시
+                } else {
+                    card.style.display = 'none'; // 검색어가 포함되지 않은 카드는 화면에서 숨김
+                }
+            });
+        }
+
+
+
+        but.addEventListener('click', searchfun);
+
+
+    </script>
+</head>
+
+
+<body>
+
+    <header>
+        <h1>최고 평점 영화 검색</h1>
+    </header>
+    <div class="labels">
+        <label> 영화 검색 : </label>
+        <input type=text id="key" placeholder="영화 제목을 검색해보세요">
+        <button id="sb">검색</button>
+    </div>
+
+    <div>
+        <div class="mypostingbox">
+            <!-- <div class="card">
+                <img src="" id="image" alt="Denim Jeans" style="width:100%">
+                <h1 id="title"></h1>
+                <p id="comment"> </p>
+                <p id="score"></p>
+            </div>
+            <div class="card">
+                <img src="https://i.namu.wiki/i/VvuOvpcYtShPIEU6eZgdfGfQKAsX1Tn5ep3cnHHFjqVnaDG5-IgllrG78mzYLd4OX0mv1-pHVF8RtTAE2b9iyg.webp"
+                    alt="Denim Jeans" style="width:100%">
+                <h1>영화제목</h1>
+                <p> 영화 코멘트 </p>
+                <p>영화 평점 기록</p>
+            </div>
+            <div class="card">
+                <img src="https://i.namu.wiki/i/VvuOvpcYtShPIEU6eZgdfGfQKAsX1Tn5ep3cnHHFjqVnaDG5-IgllrG78mzYLd4OX0mv1-pHVF8RtTAE2b9iyg.webp"
+                    alt="Denim Jeans" style="width:100%">
+                <h1>영화제목</h1>
+                <p> 영화 코멘트 </p>
+                <p>영화 평점 기록</p>
+            </div> -->
+        </div>
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>
