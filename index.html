@@ -184,57 +184,6 @@
 
         //     displayMovies(filteredMovies);
       });
-
-      //   function displayMovies(movies) {
-      //     const myPostingBox = document.querySelector(".mypostingbox");
-      //     myPostingBox.innerHTML = ""; // 이전 결과를 지웁니다.
-
-      //     for (let i = 0; i < movies.length; i++) {
-      //       let temp_html = `
-      //   <div class="card" onclick=openwindow(${movies[i].id});>
-      //     <img src="${imageUrl}${movies[i].poster_path}" id="image" alt="" style="width:100%">
-      //     <h1 class="movie-title">${movies[i].title}</h1>
-      //     <p>${movies[i].overview} </p>
-      //     <p>${movies[i].vote_average}</p>
-      //   </div>
-      // `;
-      //       myPostingBox.innerHTML += temp_html;
-      //     }
-      //   }
-
-      //-------------------------------------------------------------------------
-      //   document.getElementById("searchForm").addEventListener("submit", function (event) {
-      //     event.preventDefault(); // 기본 제출 동작 방지
-      //     searchMovies();
-      //   });
-
-      //   function searchMovies() {
-      //     const searchInput = document.getElementById("Input");
-      //     const searchValue = searchInput.value.toLowerCase();
-
-      //     fetch(`https://api.themoviedb.org/3/search/movie?query=${searchValue}&language=en-US&page=1`, options)
-      //       .then((response) => response.json())
-      //       .then((data) => {
-      //         const searchResultsDiv = document.querySelector(".mypostingbox");
-
-      //         searchResultsDiv.innerHTML = "";
-
-      //         for (let i = 0; i < data.results.length; i++) {
-      //           let temp_html = `
-      //           <div class="card" onclick=openwindow(${data.results[i].id});>
-      //               <img src="${imageUrl}${data.results[i].poster_path}" id="image" alt="" style="width:100%">
-      //               <h1>${data.results[i].title}</h1>
-      //               <p>${data.results[i].overview} </p>
-      //               <p>${data.results[i].vote_average}</p>
-      //           </div>
-      //                 `;
-      //           searchResultsDiv.innerHTML += temp_html; //innerHTML 바꿔보기 반복문 밖으로 빼보자
-      //         }
-      //       })
-      //       .catch((error) => {
-      //         console.error("Error fetching data:", error);
-      //       });
-      //   }
     </script>
   </body>
 </html>
