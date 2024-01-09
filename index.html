@@ -1,229 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>javascript project</title>
 
-
     <style>
-        body {
-            background-color: skyblue;
-        }
+      body {
+        background-color: skyblue;
+      }
 
-        header {
-            background-color: yellow;
+      header {
+        background-color: yellow;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0;
+      }
 
-        }
+      * {
+        margin: 0;
+      }
 
-        * {
-            margin: 0;
-        }
+      .labels {
+        height: 100px;
+        font-size: 25px;
 
-        .labels {
-            height: 100px;
-            font-size: 25Px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
 
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
+      .labels > input {
+        margin-left: 7px;
+        padding: 7px;
+      }
 
-        }
+      .labels > button {
+        margin-left: 7px;
+        padding: 7px;
+      }
 
-        .labels>input {
-            margin-left: 7px;
-            padding: 7px;
-        }
+      .card {
+        height: 800px;
 
-        .labels>button {
-            margin-left: 7px;
-            padding: 7px;
-        }
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: 30px auto 20px auto;
+        text-align: center;
+        font-family: arial;
 
+        border-radius: 5px;
+        border: 1px solid white;
 
-        .card {
+        padding: 20px;
+      }
 
-            height: 800px;
-
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            max-width: 300px;
-            margin: 30px auto 20px auto;
-            text-align: center;
-            font-family: arial;
-
-            border-radius: 5px;
-            border: 1px solid white;
-
-            padding: 20px;
-        }
-
-        .mypostingbox {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-        }
+      .mypostingbox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+      }
     </style>
+  </head>
 
-    <script>
-        // // firebase
-        // // Firebase SDK 라이브러리 가져오기
-        // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        // import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        // import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        // import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-
-        // // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        // const firebaseConfig = {
-        //     apiKey: "AIzaSyDSKIkghyN5-KqScUkRhCH0sOFnkq--wZ8",
-        //     authDomain: "songyu-project.firebaseapp.com",
-        //     projectId: "songyu-project",
-        //     storageBucket: "songyu-project.appspot.com",
-        //     messagingSenderId: "510499059389",
-        //     appId: "1:510499059389:web:5efe8d56288a47702029d4",
-        //     measurementId: "G-0HQ6RY35XB"
-        // };
-
-        // // Initialize Firebase
-        // const app = initializeApp(firebaseConfig);
-        // // const analytics = getAnalytics(app);
-
-
-
-        function openwindow(id) {
-        
-        alert(`영화id : ${id}`)      // ``(백틱)이 먹힌다. 밑에 id 값 주고 적기!!
-        };
-
-
-
-        // openapi
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMWEyMWFhZmJlOGZkNDI1NmVhMTZjNTA3NjBlN2JhNiIsInN1YiI6IjY1OTc5MjY1ZWQ5NmJjMmU5MWY3YTNmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DE3mJi9RXTg2qf30PH63hQ9WBWNyXuV1rSTL7Shdf1Q'
-            }
-        };
-
-        let imageUrl = "https://image.tmdb.org/t/p/w300";
-
-
-
-        fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
-            .then(response => response.json())
-            .then(data => {
-
-
-                const myPostingBox = document.querySelector('.mypostingbox');
-                for (let i = 0; i < data.results.length; i++) {
-
-
-
-                    let temp_html = `
-            <div class="card" onclick=openwindow(${data.results[i].id});>
-                <img src="${imageUrl}${data.results[i].poster_path}" id="image" alt="" style="width:100%">
-                <h1>${data.results[i].title}</h1>
-                <p>${data.results[i].overview} </p>
-                <p>${data.results[i].vote_average}</p>
-            </div>
-                  `;
-                    myPostingBox.innerHTML += temp_html;
-                }
-
-                // let one = data.result[0].poster_path;
-                // document.getElementById('image').textContent = one;
-
-                // let two = data.results[0].original_title;
-                // document.getElementById('title').textContent = two;
-
-                // let three = data.results[0].overview;
-                // document.getElementById('comment').textContent = three;
-
-                // let four = data.results[0].vote_average;
-                // document.getElementById('score').textContent = four;
-
-
-            }
-
-            )
-            .catch(err => console.error(err));
-
-
-
-
-
-
-
-        // fetch('https://api.themoviedb.org/3/configuration', options)
-        //     .then(response => response.json())
-        //     .then(data1 => {
-        //         let posterPath = data1.images.base_url + data1.images.poster_sizes[0];   //경로
-        //         document.getElementById('image').src = posterPath;
-
-        //     })
-
-        // // url 구하기
-        // function getPosterUrl(images, size) {
-        //     let posterSize = images.poster_sizes[0];
-        //     return images.base.url +  images.backdrop_size[0] + '.jpg'
-        // }
-
-
-
-
-
-
-        // 검색
-        const keys = document.getElementById('key')
-        const but = document.getElementById('sb')
-
-        function searchfun() {
-            const searchKeyword = keys.value.toLowerCase();
-
-            const cards = document.querySelectorAll('.card');
-
-            cards.forEach(card => {
-                const title = card.querySelector('h1').textContent.toLowerCase();
-
-                if (title.includes(searchKeyword)) {
-                    card.style.display = 'block'; // 검색어가 포함된 카드는 화면에 표시
-                } else {
-                    card.style.display = 'none'; // 검색어가 포함되지 않은 카드는 화면에서 숨김
-                }
-            });
-        }
-
-
-
-        but.addEventListener('click', searchfun);
-
-
-    </script>
-</head>
-
-
-<body>
-
+  <body>
     <header>
-        <h1>최고 평점 영화 검색</h1>
+      <h1>최고 평점 영화 검색</h1>
     </header>
-    <div class="labels">
-        <label> 영화 검색 : </label>
-        <input type=text id="key" placeholder="영화 제목을 검색해보세요">
-        <button id="sb">검색</button>
-    </div>
+    <form class="labels" id="searchForm">
+      <label> 영화 검색 : </label>
+      <input id="Input" type="text" placeholder="영화 제목을 검색해보세요" />
+      <button id="btn" type="submit">검색</button>
+    </form>
 
     <div>
-        <div class="mypostingbox">
-            <!-- <div class="card">
+      <div class="mypostingbox" id="movieContainer">
+        <!-- <div class="card">
                 <img src="" id="image" alt="Denim Jeans" style="width:100%">
                 <h1 id="title"></h1>
                 <p id="comment"> </p>
@@ -243,14 +99,142 @@
                 <p> 영화 코멘트 </p>
                 <p>영화 평점 기록</p>
             </div> -->
-        </div>
-
+      </div>
     </div>
 
+    <script>
+      function openwindow(id) {
+        alert(`영화id : ${id}`); // ``(백틱)이 먹힌다. 밑에 id 값 주고 적기!!
+      }
 
+      // openapi
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMWEyMWFhZmJlOGZkNDI1NmVhMTZjNTA3NjBlN2JhNiIsInN1YiI6IjY1OTc5MjY1ZWQ5NmJjMmU5MWY3YTNmOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DE3mJi9RXTg2qf30PH63hQ9WBWNyXuV1rSTL7Shdf1Q"
+        }
+      };
 
+      let imageUrl = "https://image.tmdb.org/t/p/w300";
 
+      let moviesData;
 
-</body>
+      fetch("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1", options)
+        .then((response) => response.json())
+        .then((data) => {
+          const myPostingBox = document.querySelector(".mypostingbox");
 
+          // let
+
+          for (let i = 0; i < data.results.length; i++) {
+            let temp_html = `
+            <div class="card" onclick=openwindow(${data.results[i].id});>
+                <img src="${imageUrl}${data.results[i].poster_path}" id="image" alt="" style="width:100%">
+                <h1 class="movie-title">${data.results[i].title}</h1>
+                <p>${data.results[i].overview} </p>
+                <p>${data.results[i].vote_average}</p>
+            </div>
+                  `;
+            myPostingBox.innerHTML += temp_html; //innerHTML 바꿔보기 반복문 밖으로 빼보자
+          }
+        })
+        .catch((err) => console.error(err));
+      //-----------------------------------------------------------------------
+
+      // 갖고와서 > 저기 안에서 검색 그대로 원하는 태그에 innerhtml 쓰자 문자열로 // console.log 많이 활용
+      // 영화 검색
+
+      // 검색 요소를 가지고 오기
+      // 검색 결과 요소를 가지고 오기 단순하게 검색기능만 구현
+      //
+
+      // 검색기능
+      // 버튼 기능만 구현하면 되잖아 버튼 기능 어떻게 구현하는데?
+      // 버튼 기능
+      // 검색 버튼 눌렀을 때 onclick=openwise() 검색 하게 해야돼 어떻게?  fetch 이용해서
+      //class = card 가지고 오고 영화제목이 뭔지  비슷한지 체크 아니면 none
+      //----------------------------------------------------------------------------------
+      function search() {
+        let searchInput = document.getElementById("Input").value.toUpperCase();
+
+        let item = document.querySelectorAll(".card");
+
+        let l = document.getElementsByTagName("h1");
+
+        for (let i = 0; i <= item.length; i++) {
+          let a = item[i].getElementsByTagName("h1")[0];
+
+          let value = a.innerHTML || a.innerText || a.textContent;
+
+          if (value.toUpperCase().indexOf(searchInput) > -1) {
+            item[i].style.display = "";
+          } else {
+            item[i].style.display = "none";
+          }
+        }
+      }
+
+      document.getElementById("searchForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // 폼이 제출되고 페이지가 새로 고쳐지는 것을 방지합니다. //엔터가 왜 될까?
+        search(); // submit 왜 가짐 ? / evnet.pre 왜 필요 ? // form 태그 <ㅡ< 특성 보자
+        //     const searchTerm = document.getElementById("Input").value.toLowerCase();
+        //     const filteredMovies = moviesData.results.filter((movie) => movie.title.toLowerCase().includes(searchTerm));
+
+        //     displayMovies(filteredMovies);
+      });
+
+      //   function displayMovies(movies) {
+      //     const myPostingBox = document.querySelector(".mypostingbox");
+      //     myPostingBox.innerHTML = ""; // 이전 결과를 지웁니다.
+
+      //     for (let i = 0; i < movies.length; i++) {
+      //       let temp_html = `
+      //   <div class="card" onclick=openwindow(${movies[i].id});>
+      //     <img src="${imageUrl}${movies[i].poster_path}" id="image" alt="" style="width:100%">
+      //     <h1 class="movie-title">${movies[i].title}</h1>
+      //     <p>${movies[i].overview} </p>
+      //     <p>${movies[i].vote_average}</p>
+      //   </div>
+      // `;
+      //       myPostingBox.innerHTML += temp_html;
+      //     }
+      //   }
+
+      //-------------------------------------------------------------------------
+      //   document.getElementById("searchForm").addEventListener("submit", function (event) {
+      //     event.preventDefault(); // 기본 제출 동작 방지
+      //     searchMovies();
+      //   });
+
+      //   function searchMovies() {
+      //     const searchInput = document.getElementById("Input");
+      //     const searchValue = searchInput.value.toLowerCase();
+
+      //     fetch(`https://api.themoviedb.org/3/search/movie?query=${searchValue}&language=en-US&page=1`, options)
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         const searchResultsDiv = document.querySelector(".mypostingbox");
+
+      //         searchResultsDiv.innerHTML = "";
+
+      //         for (let i = 0; i < data.results.length; i++) {
+      //           let temp_html = `
+      //           <div class="card" onclick=openwindow(${data.results[i].id});>
+      //               <img src="${imageUrl}${data.results[i].poster_path}" id="image" alt="" style="width:100%">
+      //               <h1>${data.results[i].title}</h1>
+      //               <p>${data.results[i].overview} </p>
+      //               <p>${data.results[i].vote_average}</p>
+      //           </div>
+      //                 `;
+      //           searchResultsDiv.innerHTML += temp_html; //innerHTML 바꿔보기 반복문 밖으로 빼보자
+      //         }
+      //       })
+      //       .catch((error) => {
+      //         console.error("Error fetching data:", error);
+      //       });
+      //   }
+    </script>
+  </body>
 </html>
